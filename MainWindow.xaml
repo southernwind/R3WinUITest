@@ -8,7 +8,44 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
-    </StackPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <TextBlock Text="ReactiveProperty"/>
+            <TextBlock>
+                <Run Text="Count:"/>
+                <Run Text="{x:Bind ReactivePropertyViewModel.Count.Value,Mode=OneWay}"/>
+            </TextBlock>
+            <Button Content="Increment" Command="{x:Bind ReactivePropertyViewModel.IncrementCommand}"/>
+            <Button Content="Increment In Task" Command="{x:Bind ReactivePropertyViewModel.IncrementInTaskCommand}"/>
+            <Button Content="Add Item" Command="{x:Bind ReactivePropertyViewModel.AddCommand}"/>
+            <ListBox ItemsSource="{x:Bind ReactivePropertyViewModel.Collection,Mode=OneWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding }"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <TextBlock Text="R3/ObserableCollections"/>
+            <TextBlock>
+                <Run Text="Count:"/>
+                <Run Text="{x:Bind R3ViewModel.Count.Value,Mode=OneWay}"/>
+            </TextBlock>
+            <Button Content="Increment" Command="{x:Bind R3ViewModel.IncrementCommand}"/>
+            <Button Content="Increment In Task" Command="{x:Bind R3ViewModel.IncrementInTaskCommand}"/>
+            <Button Content="Add Item" Command="{x:Bind R3ViewModel.AddCommand}"/>
+            <ListBox ItemsSource="{x:Bind R3ViewModel.Collection,Mode=OneWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding }"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </Grid>
 </Window>
