@@ -15,7 +15,9 @@ public class R3ViewModel
 
     public ReactiveCommand<Unit> IncrementInTaskCommand { get; } = new();
 
-    public ObservableList<string> Collection { get; } = ["Item 0", "Item 1"];
+    public ObservableList<string> Collection2 { get; } = ["Item 0", "Item 1"];
+
+    public INotifyCollectionChangedSynchronizedView<string> Collection { get; } 
 
     public ReactiveCommand<Unit> AddCommand { get; } = new();
     public R3ViewModel()
@@ -31,9 +33,10 @@ public class R3ViewModel
         this.AddCommand.Subscribe(_ =>
         {
 
-            this.Collection.Add($"Item {this.Collection.Count}");
+            this.Collection2.Add($"Item {this.Collection.Count}");
         });
 
+        this.Collection = this.Collection2.CreateView(x => x).ToNotifyCollectionChanged(SynchronizationContextCollectionEventDispatcher.Current);
         this.Count = this.Count2.ObserveOnCurrentSynchronizationContext().ToBindableReactiveProperty();
 
     }
