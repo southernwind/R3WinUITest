@@ -8,7 +8,8 @@ namespace R3WinUITest;
 
 public class R3ViewModel
 {
-    public BindableReactiveProperty<int> Count { get; } = new();
+    public BindableReactiveProperty<int> Count { get; }
+    public ReactiveProperty<int> Count2 { get; } = new();
 
     public ReactiveCommand<Unit> IncrementCommand { get; } = new();
 
@@ -23,7 +24,7 @@ public class R3ViewModel
         this.IncrementInTaskCommand.Subscribe(_ => {
             Task.Run(() =>
             {
-                this.Count.Value++;
+                this.Count2.Value++;
             });
         });
 
@@ -32,6 +33,8 @@ public class R3ViewModel
 
             this.Collection.Add($"Item {this.Collection.Count}");
         });
+
+        this.Count = this.Count2.ObserveOnCurrentSynchronizationContext().ToBindableReactiveProperty();
 
     }
 }
